@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,47 +24,25 @@ import java.util.logging.Logger;
  */
 public class ReceiveFiles {
 
-    private final ServerSocket server;
-//    private final Socket client;
+    private final Socket client;
+    private final InputStream is;
+    private final OutputStream os;
+    private final DataInputStream dis;
 
-    public ReceiveFiles(ServerSocket server) {
-//    public ReceiveFiles(Socket client) {
-        this.server = server;
-//        this.client = client;
+    public ReceiveFiles(Socket client, InputStream is, OutputStream os, DataInputStream dis) {
+        this.client = client;
+        this.is = is;
+        this.os = os;
+        this.dis = dis;
     }
 
     public void receiveFiles() {
-        while (true) {
-            Socket client;
-            try {
-                client = server.accept();
-                System.out.println("Client connected " + client.getInetAddress());
-                Thread thread = new ThreadedServer(client);
-                thread.start();
-            } catch (IOException ex) {
-                Logger.getLogger(ReceiveFiles.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
-}
-
-class ThreadedServer extends Thread {
-
-    private final String foldername = "Files/";
-    private final Socket client;
-
-    public ThreadedServer(Socket client) {
-        this.client = client;
-    }
-
-    @Override
-    public void run() {
+        System.out.println("Receiving files");
+        String foldername = "Files/";
         try {
-            InputStream is = client.getInputStream();
-            OutputStream os = client.getOutputStream();
-            DataInputStream dis = new DataInputStream(is);
             String filename = dis.readUTF();
+//            String filename = (String) is.read();
+            System.out.println("Filename: " + filename);
             int startCounter = dis.readInt();
             int endCounter = dis.readInt();
             String name;
@@ -97,11 +76,9 @@ class ThreadedServer extends Thread {
                     System.out.println(exc.getMessage());
                 }
             }
-
         } catch (IOException ex) {
-            Logger.getLogger(ThreadedServer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReceiveFiles.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
 }
