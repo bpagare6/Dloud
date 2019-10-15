@@ -14,6 +14,7 @@ import SplitMergeFiles.MergeFiles;
 import SplitMergeFiles.SplitFile;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -146,15 +147,18 @@ public class Program extends javax.swing.JFrame {
             uploadfile.setText("<html>Request to Upload: " + filename + "</html>");
 
             try {
-                int numParts = 5;
+                int numParts = 6;
                 // Splitting in files
                 numParts = SplitFile.splitFile(filepath, filename, numParts);
+
+                this.ipListConnected = this.connectServers.connectSideServers(this.dos, this.dis);
+
                 // Send Split parts to sub-servers
                 SendParts sendParts = new SendParts(filename, ipListConnected, numParts);
                 sendParts.sendData();
                 // Clean the part files
                 CleanPartFiles cleanPartFiles = new CleanPartFiles(filename);
-                cleanPartFiles.cleanup();
+                cleanPartFiles.cleanup(new File("."));
                 System.out.println("Uploading Complete");
 
                 // Add the filename to database
@@ -179,6 +183,8 @@ public class Program extends javax.swing.JFrame {
         String selectedFile = (String) this.list.getSelectedValue();
         downloadfile.setText("<html>Request to Download: " + selectedFile + "</html>");
 
+        this.ipListConnected = this.connectServers.connectSideServers(this.dos, this.dis);
+
         // Receive all the parts from the all other servers
         ReceiveParts receiveParts = new ReceiveParts(this.ipListConnected);
         receiveParts.receiveParts(selectedFile);
@@ -186,16 +192,14 @@ public class Program extends javax.swing.JFrame {
         System.out.println("Done downloading");
 
         // Get the parts count from DB
-        
         // Merge the parts
         MergeFiles mergeFiles = new MergeFiles();
-        mergeFiles.mergeFile(selectedFile, 6);
+        mergeFiles.mergeFile(selectedFile, 4);
         System.out.println("Merging completed");
-        
+
         // Clean Up the parts
         CleanPartFiles cleanPartFiles = new CleanPartFiles(selectedFile);
-        cleanPartFiles.cleanup();
-        this.update_list();
+//        cleanPartFiles.cleanup(new File("/home/bhushan/Downloads"));
         this.message.setText("File successfully Downloaded in ~/Downloads/");
     }//GEN-LAST:event_downloadActionPerformed
 
@@ -280,7 +284,7 @@ public class Program extends javax.swing.JFrame {
                         p.dos = new DataOutputStream(p.os);
 
                         // get the IPList of connected devices
-                        p.ipListConnected = p.connectServers.connectSideServers(p.dos, p.dis);
+//                        p.ipListConnected = p.connectServers.connectSideServers(p.dos, p.dis);
                     } catch (IOException ex) {
                         Logger.getLogger(Program.class.getName()).log(Level.SEVERE, null, ex);
                     }

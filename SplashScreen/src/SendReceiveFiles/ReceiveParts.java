@@ -35,7 +35,12 @@ public class ReceiveParts {
         ipListConnected.stream().map((connectionEntry) -> {
             return new ThreadedServer(connectionEntry.getSocket(), filename);
         }).forEach((thread) -> {
-            thread.start();
+            try {
+                thread.start();
+                thread.join();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ReceiveParts.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
 
@@ -43,7 +48,7 @@ public class ReceiveParts {
 
 class ThreadedServer extends Thread {
 
-    private final String foldername = "~/Downloads/";
+    private final String foldername = "/home/bhushan/Downloads/";
     private final Socket client;
     private final String filename;
 
@@ -79,6 +84,7 @@ class ThreadedServer extends Thread {
                     int size = fsize;
                     byte[] data = new byte[size];
                     File fc = new File(directory, name);
+                    System.out.println("FC:" + fc);
                     try (FileOutputStream fileOut = new FileOutputStream(fc)) {
                         DataOutputStream dataOut = new DataOutputStream(fileOut);
 
@@ -94,7 +100,7 @@ class ThreadedServer extends Thread {
                     System.out.println(exc.getMessage());
                 }
             }
-
+            this.client.close();
         } catch (IOException ex) {
             Logger.getLogger(ThreadedServer.class.getName()).log(Level.SEVERE, null, ex);
         }

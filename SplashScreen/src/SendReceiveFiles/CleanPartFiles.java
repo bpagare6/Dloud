@@ -19,9 +19,9 @@ public class CleanPartFiles {
         this.filename = filename;
     }
 
-    public void cleanup() {
+    public void cleanup(File folder) {
         System.out.println("Cleaning up the files");
-        File folder = new File(".");
+//        File folder = new File(".");
         for (File file : folder.listFiles()) {
             if (file.getName().startsWith("." + filename)) {
                 file.delete();

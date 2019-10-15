@@ -23,16 +23,21 @@ import java.util.logging.Logger;
  */
 public class ReceiveFiles {
 
-    private ServerSocket server;
+    private final ServerSocket server;
+//    private final Socket client;
 
     public ReceiveFiles(ServerSocket server) {
+//    public ReceiveFiles(Socket client) {
         this.server = server;
+//        this.client = client;
     }
 
     public void receiveFiles() {
         while (true) {
+            Socket client;
             try {
-                Socket client = server.accept();
+                client = server.accept();
+                System.out.println("Client connected " + client.getInetAddress());
                 Thread thread = new ThreadedServer(client);
                 thread.start();
             } catch (IOException ex) {
@@ -79,7 +84,7 @@ class ThreadedServer extends Thread {
                     File fc = new File(directory, name);
                     try (FileOutputStream fileOut = new FileOutputStream(fc)) {
                         DataOutputStream dataOut = new DataOutputStream(fileOut);
-                        
+
                         byte[] buf = new byte[fsize];
                         int fileSize = fsize;
                         int n;

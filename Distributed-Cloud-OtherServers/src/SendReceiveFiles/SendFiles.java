@@ -27,23 +27,25 @@ import java.util.logging.Logger;
  */
 public class SendFiles {
 
-    private ServerSocket server;
+    private final ServerSocket server;
+//    private final Socket client;
 
     public SendFiles(ServerSocket server) {
+//    public SendFiles(Socket client) {
         this.server = server;
+//        this.client = client;
     }
 
     public void sendData() {
+        Socket client;
         try {
-            Socket client = server.accept();
+            client = server.accept();
             Thread t = new ThreadedSending(client);
             t.start();
-            try {
-                t.join();
-            } catch (InterruptedException ex) {
-                Logger.getLogger(SendFiles.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            t.join();
         } catch (IOException ex) {
+            Logger.getLogger(SendFiles.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
             Logger.getLogger(SendFiles.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
