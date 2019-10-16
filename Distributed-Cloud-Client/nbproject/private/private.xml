@@ -3,8 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/bhushan/NetBeansProjects/SplashScreen/src/SendReceiveFiles/ReceiveParts.java</file>
-            <file>file:/home/bhushan/NetBeansProjects/SplashScreen/src/MainGUI/Program.java</file>
+            <file>file:/home/bhushan/NetBeansProjects/Distributed-Cloud-Client/src/SplitMergeFiles/SplitFile.java</file>
+            <file>file:/home/bhushan/NetBeansProjects/Distributed-Cloud-Client/src/CreateConnections/ConnectMainServer.java</file>
+            <file>file:/home/bhushan/NetBeansProjects/Distributed-Cloud-Client/src/MainGUI/Program.java</file>
+            <file>file:/home/bhushan/NetBeansProjects/Distributed-Cloud-Client/src/SplitMergeFiles/MergeFiles.java</file>
+            <file>file:/home/bhushan/NetBeansProjects/Distributed-Cloud-Client/src/MainGUI/Main.java</file>
+            <file>file:/home/bhushan/NetBeansProjects/Distributed-Cloud-Client/src/SendReceiveFiles/SendParts.java</file>
+            <file>file:/home/bhushan/NetBeansProjects/Distributed-Cloud-Client/src/SendReceiveFiles/CleanPartFiles.java</file>
         </group>
     </open-files>
 </project-private>

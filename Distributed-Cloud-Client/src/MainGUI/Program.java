@@ -134,7 +134,7 @@ public class Program extends javax.swing.JFrame {
 
     private void uploadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uploadActionPerformed
         // TODO add your handling code here:
-        this.uploadfile.setText("");
+        this.downloadfile.setText("");
         this.message.setText("");
         String filepath;
         String filename;
@@ -144,7 +144,7 @@ public class Program extends javax.swing.JFrame {
             filepath = j.getSelectedFile().getAbsolutePath();
             filename = j.getSelectedFile().getName();
             // set the label to the path of the selected file
-            uploadfile.setText("<html>Request to Upload: " + filename + "</html>");
+            this.uploadfile.setText("<html>Request to Upload: " + filename + "</html>");
 
             try {
                 int numParts = 5;
@@ -157,14 +157,17 @@ public class Program extends javax.swing.JFrame {
                 // Clean the part files
                 CleanPartFiles cleanPartFiles = new CleanPartFiles(filename);
                 cleanPartFiles.cleanup(new File("."));
-                System.out.println("Uploading Complete");
 
                 // Add the filename to database
                 this.dos.writeUTF("Add File");
+                System.out.println("Add file request sent");
                 this.dos.writeUTF(filename);
+                System.out.println("Filename sent");
                 this.dos.writeUTF(this.loggedUser);
+                System.out.println("Owner sent");
                 this.update_list();
                 this.message.setText("File successfully Uploaded");
+                System.out.println("Uploading Completed");
             } catch (IOException ex) {
                 Logger.getLogger(Program.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -195,12 +198,15 @@ public class Program extends javax.swing.JFrame {
 
         // Clean Up the parts
         CleanPartFiles cleanPartFiles = new CleanPartFiles(selectedFile);
-        cleanPartFiles.cleanup(new File("/home/bhushan/Downloads"));
-        this.message.setText("File successfully Downloaded in ~/Downloads/");
+        String home = System.getProperty("user.home");
+        cleanPartFiles.cleanup(new File(home + "/Downloads"));
+        this.message.setText("File successfully Downloaded in Downloads Folder");
     }//GEN-LAST:event_downloadActionPerformed
 
     public void update_list() {
+        System.out.println("Request to update list of files");
         try {
+            this.dos.flush();
             this.dos.writeUTF("Get Files List");
         } catch (IOException ex) {
             Logger.getLogger(Program.class.getName()).log(Level.SEVERE, null, ex);

@@ -48,7 +48,8 @@ public class ReceiveParts {
 
 class ThreadedServer extends Thread {
 
-    private final String foldername = "/home/bhushan/Downloads/";
+    private final String home = System.getProperty("user.home");
+    private final String foldername = home + "/Downloads/";
     private final Socket client;
     private final String filename;
 

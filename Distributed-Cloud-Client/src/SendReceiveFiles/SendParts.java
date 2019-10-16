@@ -90,12 +90,11 @@ class ThreadedSending extends Thread {
             String flag = dis.readUTF();
             if (flag.equals("1")) {
                 System.out.println("Request to upload " + this.filename);
-                dos.flush();
+//                dos.flush();
                 dos.writeUTF(this.filename);
-                dos.flush();
                 dos.writeInt(this.startCounter);
-                dos.flush();
                 dos.writeInt(this.endCounter);
+                System.out.println("Startcounter: " + this.startCounter + " Endcounter: " + this.endCounter);
                 for (int i = startCounter; i < endCounter; i++) {
                     String fname = "." + filename + "." + i + ".splitPart";
                     file = new FileInputStream(fname);

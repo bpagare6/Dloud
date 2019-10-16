@@ -82,8 +82,9 @@ class ThreadedServer extends Thread {
             DataOutputStream dos = new DataOutputStream(os);
 
             while (true) {
+                System.out.println("Listening to client");
                 String request = dis.readUTF();
-
+                System.out.println("Request: " + request);
                 switch (request) {
                     case "Validate User":
                         String username = dis.readUTF();
@@ -93,6 +94,7 @@ class ThreadedServer extends Thread {
                         break;
                     case "Get Files List":
                         List<String> fileList;
+                        System.out.println("Sending list of files");
                         fileList = fileDB.get_file_list();
                         dos.writeUTF(Integer.toString(fileList.size()));
                         for (String file: fileList) {
@@ -102,7 +104,11 @@ class ThreadedServer extends Thread {
                     case "Get IP List":
                         List<String> ipList = new ArrayList<>();
                         // Add IPs to list for sending to client
-                        ipList.add("192.168.1.102");
+//                        ipList.add("192.168.43.212");
+                        ipList.add("10.10.12.170");
+                        ipList.add("10.10.10.26");
+                        ipList.add("10.10.12.54");
+                        ipList.add("10.10.13.93");
                         dos.writeUTF(Integer.toString(ipList.size()));
                         for (String ip: ipList) {
                             dos.writeUTF(ip);
@@ -110,8 +116,18 @@ class ThreadedServer extends Thread {
                         break;
                     case "Add File":
                         String filename = dis.readUTF();
+                        System.out.println("Filename received: " + filename);
                         String owner = dis.readUTF();
+                        System.out.println("Owner received: " + owner);
                         fileDB.addFile(filename, owner);
+                        break;
+                    case "Add New User":
+                        String name = dis.readUTF();
+                        String email = dis.readUTF();
+                        String uname = dis.readUTF();
+                        String passwd = dis.readUTF();
+                        dos.writeBoolean(userDB.add_user(name, email, uname, passwd));
+                        break;
                     default:
                         break;
                 }

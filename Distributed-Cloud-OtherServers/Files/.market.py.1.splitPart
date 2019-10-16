@@ -1,0 +1,61 @@
+ere nodes
+represents the stocks and edges the:
+
+- cluster labels are used to define the color of the nodes
+- the sparse covariance model is used to display the strength of the edges
+- the 2D embedding is used to position the nodes in the plan
+
+This example has a fair amount of visualization-related code, as
+visualization is crucial here to display the graph. One of the challenge
+is to position the labels minimizing overlap. For this we use an
+heuristic based on the direction of the nearest neighbor along each
+axis.
+"""
+
+# Author: Gael Varoquaux gael.varoquaux@normalesup.org
+# License: BSD 3 clause
+
+import sys
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.collections import LineCollection
+
+import pandas as pd
+
+from sklearn import cluster, covariance, manifold
+
+print(__doc__)
+
+
+# #############################################################################
+# Retrieve the data from Internet
+
+# The data is from 2003 - 2008. This is reasonably calm: (not too long ago so
+# that we get high-tech firms, and before the 2008 crash). This kind of
+# historical data can be obtained for from APIs like the quandl.com and
+# alphavantage.co ones.
+
+symbol_dict = {
+    'TOT': 'Total',
+    'XOM': 'Exxon',
+    'CVX': 'Chevron',
+    'COP': 'ConocoPhillips',
+    'VLO': 'Valero Energy',
+    'MSFT': 'Microsoft',
+    'IBM': 'IBM',
+    'TWX': 'Time Warner',
+    'CMCSA': 'Comcast',
+    'CVC': 'Cablevision',
+    'YHOO': 'Yahoo',
+    'DELL': 'Dell',
+    'HPQ': 'HP',
+    'AMZN': 'Amazon',
+    'TM': 'Toyota',
+    'CAJ': 'Canon',
+    'SNE': 'Sony',
+    'F': 'Ford',
+    'HMC': 'Honda',
+    'NAV': 'Navistar',
+    'NOC': 'Northrop Grumman',
+    'BA': 'Boeing

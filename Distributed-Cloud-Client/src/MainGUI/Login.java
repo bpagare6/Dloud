@@ -46,6 +46,7 @@ public class Login extends javax.swing.JFrame {
         password = new javax.swing.JPasswordField();
         errormsg = new javax.swing.JLabel();
         login = new javax.swing.JButton();
+        registerlink = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -120,6 +121,15 @@ public class Login extends javax.swing.JFrame {
         });
         getContentPane().add(login, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 340, 130, 40));
 
+        registerlink.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        registerlink.setText("New User? Register Here");
+        registerlink.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                registerlinkMouseClicked(evt);
+            }
+        });
+        getContentPane().add(registerlink, new org.netbeans.lib.awtextra.AbsoluteConstraints(369, 400, 210, -1));
+
         setSize(new java.awt.Dimension(892, 680));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -141,10 +151,18 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_loginActionPerformed
 
+    private void registerlinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerlinkMouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+        Register register = new Register();
+        register.show_register(this.client, this.is, this.os, this.dis, this.dos);
+        this.dispose();
+    }//GEN-LAST:event_registerlinkMouseClicked
+
     /**
      * @param client
      */
-    public void show_login(Socket client) {
+    public void show_login(Socket client, InputStream is, OutputStream os, DataInputStream dis, DataOutputStream dos) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -170,6 +188,10 @@ public class Login extends javax.swing.JFrame {
         //</editor-fold>
 
         Login login = new Login();
+        login.is = is;
+        login.os = os;
+        login.dis = dis;
+        login.dos = dos;
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
@@ -183,7 +205,7 @@ public class Login extends javax.swing.JFrame {
         String passwd = password.getText();
 
         try {
-            if (is == null) {
+            if (this.is == null) {
                 this.is = this.client.getInputStream();
                 this.os = this.client.getOutputStream();
                 this.dis = new DataInputStream(is);
@@ -215,6 +237,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton login;
     private javax.swing.JPasswordField password;
+    private javax.swing.JLabel registerlink;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
     private Socket client;

@@ -25,7 +25,7 @@ public class Main {
         
         // Show login screen
         Login login = new Login();
-        login.show_login(connectMainServer.getClient());
+        login.show_login(connectMainServer.getClient(), null, null, null, null);
         
 //        connectMainServer.close();
     }

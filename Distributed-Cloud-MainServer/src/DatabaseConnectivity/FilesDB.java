@@ -69,6 +69,7 @@ public class FilesDB {
                 ps.setString(1, filename);
                 ps.setString(2, owner);
                 ps.executeUpdate();
+                System.out.println("File added");
             } catch (SQLException ex) {
                 Logger.getLogger(FilesDB.class.getName()).log(Level.SEVERE, null, ex);
             }

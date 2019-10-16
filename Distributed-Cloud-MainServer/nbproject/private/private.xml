@@ -3,7 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/bhushan/NetBeansProjects/Decentralized-Cloud-MainServer/src/Connection/ClientConnection.java</file>
+            <file>file:/home/bhushan/NetBeansProjects/Distributed-Cloud-MainServer/src/Connection/ClientConnection.java</file>
+            <file>file:/home/bhushan/NetBeansProjects/Distributed-Cloud-MainServer/src/DatabaseConnectivity/FilesDB.java</file>
+            <file>file:/home/bhushan/NetBeansProjects/Distributed-Cloud-MainServer/src/DatabaseConnectivity/DBConnection.java</file>
         </group>
     </open-files>
 </project-private>

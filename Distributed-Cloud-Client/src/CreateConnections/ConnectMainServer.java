@@ -20,7 +20,7 @@ public class ConnectMainServer {
     
     public void connect() {
         try {
-            client = new Socket("localhost", 8000);
+            client = new Socket("10.10.12.101", 8000);
         } catch (IOException ex) {
             Logger.getLogger(ConnectMainServer.class.getName()).log(Level.SEVERE, null, ex);
         }

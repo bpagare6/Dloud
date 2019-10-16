@@ -61,6 +61,7 @@ public class ReceiveFiles {
                     int size = fsize;
                     byte[] data = new byte[size];
                     File fc = new File(directory, name);
+                    System.out.println("FC: " + fc);
                     try (FileOutputStream fileOut = new FileOutputStream(fc)) {
                         DataOutputStream dataOut = new DataOutputStream(fileOut);
 

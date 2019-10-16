@@ -6,6 +6,7 @@
 package DatabaseConnectivity;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -30,7 +31,7 @@ public class UsersDB {
         Statement statement;
         try {
             statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("select password from Users where username='" + username + "'");
+            ResultSet rs = statement.executeQuery("select password from AllUsers where username='" + username + "'");
 
             if (rs.next()) {
                 return password.equals(rs.getString("password"));
@@ -39,6 +40,21 @@ public class UsersDB {
             Logger.getLogger(UsersDB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+    
+    public boolean add_user(String name, String email, String username, String password) {
+        try {
+            PreparedStatement prepared = connection.prepareStatement("insert into AllUsers values (?,?,?,?)");
+            prepared.setString(1, name);
+            prepared.setString(2, email);
+            prepared.setString(3, username);
+            prepared.setString(4, password);
+            prepared.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UsersDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;   
     }
 
 }

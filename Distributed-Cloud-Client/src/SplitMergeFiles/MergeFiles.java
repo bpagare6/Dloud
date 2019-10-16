@@ -21,7 +21,8 @@ import java.util.logging.Logger;
 public class MergeFiles {
 
     public void mergeFile(final String filename, final int numberOfParts) {
-        String dir = "/home/bhushan/Downloads/";
+        String home = System.getProperty("user.home");
+        String dir = home + "/Downloads/";
         String suffix = ".splitPart";
         String iF = dir + "." + filename + ".";
 
